@@ -1,6 +1,7 @@
 "use strict";
 
 const express = require("express");
+const { nip19 } = require("nostr-tools");
 require("dotenv").config();
 
 function env(key, fallback) {
@@ -25,7 +26,7 @@ function handleNostr05(req, res) {
   }
   const names = {};
   validNames.forEach((n) => {
-    names[n] = env(n);
+    names[n] = nip19.decode(env(n)).data;
   });
   res.json({
     names,
